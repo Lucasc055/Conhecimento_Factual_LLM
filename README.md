@@ -20,19 +20,25 @@ Autores: **Rafael Ris-Ala, Hugo, Lucas**
 
 ## Modelos Avaliados
 
-| Modelo | Empresa | Dados de Treino | Interface |
-|---|---|---|---|---|
-| Claude 3.7 | Anthropic | Fechados | Web |
-| Gemini 1.5 Pro | Google | Fechados | Web |
-| Grok-2 | xAI | Fechados | Web |
-| GPT-5 | OpenAI | Fechados | Web |
-| DeepSeek-V3 | DeepSeek | Públicos e licenciados | Web |
-| Qwen3-235B-A22B | Alibaba Cloud | Públicos e licenciados | Web |
-| Llama 3.1-8b | Meta | Públicos e licenciados | LM Studio |
-| Mistral-7B-v0.3 | Mistral AI | Públicos e licenciados | LM Studio |
-| Gemma 3 4b | Google | Públicos e licenciados | LM Studio |
-| Qwen 2.5-7b | Alibaba Cloud | Públicos web-scale | LM Studio |
+**Via Web**
 
+| Modelo | Empresa | Dados de Treino |
+|---|---|---|
+| Claude 3.7 | Anthropic | Fechados |
+| Gemini 1.5 Pro | Google | Fechados |
+| Grok-2 | xAI | Fechados |
+| GPT-5 | OpenAI | Fechados |
+| DeepSeek-V3 | DeepSeek | Públicos e licenciados |
+| Qwen3-235B-A22B | Alibaba Cloud | Públicos e licenciados |
+
+**Via LM Studio (local)**
+
+| Modelo | Empresa | Parâmetros |
+|---|---|---|
+| Llama 3.1-8b | Meta | 8B |
+| Mistral-7B-v0.3 | Mistral AI | 7B |
+| Gemma 3 4b | Google | 4B |
+| Qwen 2.5-7b | Alibaba Cloud | 7B |
 ---
 
 ## Estrutura do Repositório
