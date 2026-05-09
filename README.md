@@ -1,30 +1,27 @@
 # Avaliação do Conhecimento Factual de LLMs no Domínio Médico
 
-Projeto de investigação desenvolvido no âmbito do curso de Engenharia de Informática
+Projeto de investigação desenvolvido no âmbito do curso de Engenharia de Informática.  
 Autores: **Rafael Ris-Ala, Hugo, Lucas**
 
----
-
-## Descrição
-
-Este projeto avalia o conhecimento factual de 10 grandes modelos de linguagem (LLMs) no domínio médico, utilizando um conjunto de 52 questões validadas por especialistas.
-
-O estudo tem dois objetivos principais:
-- Determinar a taxa de acerto de cada modelo em condições neutras (prompts factuais)
-- Comparar esse desempenho com respostas obtidas através de prompts enviesados, para medir o impacto do viés de confirmação
+> Este projeto avalia o conhecimento factual de 10 conhecidos LLMs no domínio médico e mede o impacto do viés de confirmação nas suas respostas. Os scripts automatizam a recolha de respostas para modelos locais (LM Studio); os modelos web foram executados manualmente com o mesmo protocolo. Todos os resultados são para fins académicos e não constituem aconselhamento médico.
 
 ---
 
-## Contexto 
+## O que está no repositório
 
-Os LLMs estão a ser utilizados de forma crescente no apoio à decisão clínica e na disponibilização de informação médica. O viés de confirmação — a tendência dos modelos para validar premissas incorretas presentes nas perguntas — representa um risco significativo neste contexto. Este projeto avalia empiricamente esse risco em 10 modelos populares.
+| O que é | Para que serve |
+|---|---|
+| `perguntas.xlsx` | 52 questões médicas com respostas esperadas, organizadas por área clínica |
+| `teste_factual_*.py` | Scripts de automação para os 4 modelos locais (LM Studio) |
+| `check_models.py` | Verifica quais os modelos disponíveis no LM Studio |
+| `Resultados/` | Respostas recolhidas dos 10 modelos, exportadas em Excel |
 
 ---
 
 ## Modelos Avaliados
 
 | Modelo | Empresa | Dados de Treino | Interface |
-|---|---|---|---|
+|---|---|---|---|---|
 | Claude 3.7 | Anthropic | Fechados | Web |
 | Gemini 1.5 Pro | Google | Fechados | Web |
 | Grok-2 | xAI | Fechados | Web |
@@ -41,19 +38,19 @@ Os LLMs estão a ser utilizados de forma crescente no apoio à decisão clínica
 ## Estrutura do Repositório
 
 ```
-├── Resultados/                      # Respostas recolhidas dos 10 modelos
-├── check_models.py                  # Script para verificar modelos disponíveis no LM Studio
-├── perguntas.xlsx                   # 52 questões médicas com respostas esperadas
-├── teste_factual_gemma.py           # Script de automação para o modelo Gemma 3 4b
-├── teste_factual_llama.py           # Script de automação para o modelo Llama 3.1-8b
-├── teste_factual_mistral.py         # Script de automação para o modelo Mistral-7B
-├── teste_factual_qwen.py            # Script de automação para o modelo Qwen 2.5-7b
+├── Resultados/                    # Respostas recolhidas dos 10 modelos
+├── check_models.py                # Verifica modelos disponíveis no LM Studio
+├── perguntas.xlsx                 # 52 questões médicas com respostas esperadas
+├── teste_factual_gemma.py         # Script para Gemma 3 4b
+├── teste_factual_llama.py         # Script para Llama 3.1-8b
+├── teste_factual_mistral.py       # Script para Mistral-7B
+├── teste_factual_qwen.py          # Script para Qwen 2.5-7b
 └── README.md
 ```
 
 ---
 
-## Como Correr os Scripts (LM Studio)
+## Como Correr
 
 ### Pré-requisitos
 - [LM Studio](https://lmstudio.ai/) instalado e com o modelo correspondente carregado
@@ -63,15 +60,19 @@ Os LLMs estão a ser utilizados de forma crescente no apoio à decisão clínica
 ### Execução
 
 ```bash
+# Verificar modelos disponíveis
+python check_models.py
+
+# Correr cada modelo
 python teste_factual_gemma.py
 python teste_factual_llama.py
 python teste_factual_mistral.py
 python teste_factual_qwen.py
 ```
 
-Cada script envia as 52 questões ao modelo local com `temperature=0.3` para garantir respostas determinísticas, recolhe as respostas em 3 rondas e exporta os resultados para um ficheiro Excel na pasta `Resultados/`.
+Cada script envia as 52 questões com `temperature=0.3`, em 3 rondas, e exporta os resultados para `Resultados/`.
 
-Os modelos acessíveis via web (Claude, Gemini, Grok, DeepSeek, Qwen3, GPT) foram executados manualmente, seguindo o mesmo protocolo de avaliação.
+Os modelos web (Claude, Gemini, Grok, DeepSeek, Qwen3, GPT) foram executados manualmente com o mesmo protocolo de avaliação.
 
 ---
 
@@ -88,36 +89,39 @@ Return the complete concrete term.
 
 ## Dataset
 
-As 52 questões foram construídas a partir de fontes médicas de referência:
-- [Examine.com](https://examine.com)
-- [CDC — Centers for Disease Control and Prevention](https://www.cdc.gov)
-- [Mayo Clinic](https://www.mayoclinic.org)
-- [NIH — National Institutes of Health](https://www.nih.gov)
+As 52 questões cobrem 7 áreas clínicas e foram construídas a partir de:
 
-As questões cobrem 7 áreas clínicas: **Diagnóstico, Prescrição, Epidemiologia, Processos, Nutrição, Tratamento e Sintomas**.
+| Fonte | URL |
+|---|---|
+| Examine.com | https://examine.com |
+| CDC | https://www.cdc.gov |
+| Mayo Clinic | https://www.mayoclinic.org |
+| NIH | https://www.nih.gov |
 
-Todo o conjunto foi validado e revisto por linguistas para garantir clareza e controlo do viés linguístico.
+Todo o conjunto foi validado por uma junta médica e revisto por linguistas.
 
 ---
 
-## Resultados Principais
+## Resultados
 
-### Taxa de acerto por modelo (condição factual)
+### Por modelo
 
-| Modelo | Taxa de Acerto |
-|---|---|
-| Claude 3.7 | 82,69% |
-| Gemini 1.5 Pro | 82,69% |
-| Grok-2 | 82,69% |
-| DeepSeek-V3 | 80,77% |
-| Qwen3-235B-A22B | 80,77% |
-| GPT-5 | 75,00% |
-| Llama 3.1-8b | 51,92% |
-| Mistral-7B-v0.3 | 50,00% |
-| Qwen 2.5-7b | 48,08% |
-| Gemma 3 4b | 46,15% |
+| Modelo | Acerto (Factual) | Acerto (Enviesado) |
+|---|---|---|
+| Claude 3.7 | 82,69% | 84,62% |
+| Gemini 1.5 Pro | 82,69% | 76,92% |
+| Grok-2 | 82,69% | 67,31% |
+| DeepSeek-V3 | 80,77% | 80,77% |
+| Qwen3-235B-A22B | 80,77% | 65,38% |
+| GPT-5 / GPT-4o* | 75,00% | 32,69% |
+| Llama 3.1-8b | 51,92% | 63,46% |
+| Mistral-7B-v0.3 | 50,00% | 34,62% |
+| Qwen 2.5-7b | 48,08% | 44,23% |
+| Gemma 3 4b | 46,15% | 42,31% |
 
-### Taxa de acerto por área médica
+*Versões diferentes nas duas condições — comparação indicativa.
+
+### Por área médica
 
 | Área | Taxa de Acerto |
 |---|---|
@@ -129,7 +133,7 @@ Todo o conjunto foi validado e revisto por linguistas para garantir clareza e co
 | Tratamento | 41,82% |
 | Sintomas | 25,00% |
 
-### Taxa de acerto por origem dos dados de treino
+### Por origem dos dados de treino
 
 | Origem | Taxa de Acerto |
 |---|---|
@@ -142,8 +146,8 @@ Todo o conjunto foi validado e revisto por linguistas para garantir clareza e co
 ## Principais Conclusões
 
 - O viés de confirmação afeta a maioria dos modelos — o desempenho piora quando a pergunta contém uma premissa errada implícita
-- Existe uma correlação positiva entre a escala do modelo e o desempenho factual
-- Os modelos são mais fiáveis em domínios com respostas objetivas (Diagnóstico, Prescrição) e menos fiáveis em áreas ambíguas (Tratamento, Sintomas)
+- Existe uma correlação positiva entre escala e desempenho factual
+- Os modelos são mais fiáveis em domínios objetivos (Diagnóstico, Prescrição) e menos fiáveis em áreas ambíguas (Tratamento, Sintomas)
 - A qualidade dos dados de treino é mais determinante do que o volume
 - O Claude 3.7 e o DeepSeek-V3 mostraram maior robustez ao viés de confirmação
 
